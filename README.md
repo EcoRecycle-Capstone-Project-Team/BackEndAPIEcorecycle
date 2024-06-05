@@ -1,6 +1,6 @@
 # Ecorecycle_API
 
-### URL API https://ecorecycle.isepwebtim.my.id/
+### URL API https://api.ecorecycle.my.id/
 
 ## Authtentikasi
 
