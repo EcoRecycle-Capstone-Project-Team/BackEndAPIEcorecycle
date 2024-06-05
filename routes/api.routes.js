@@ -6,7 +6,10 @@ const reporttpaController = require("../controllers/laporantpa.controller");
 const router = express.Router();
 
 router.get("/", (req, res) => {
-  res.send("Hello Apps In Ready Guys");
+  res.json({
+    status: "success",
+    message: "API EcoRecycle 1.0",
+  });
 });
 
 router.get("/users", userController.getAllUsers);
@@ -18,7 +21,19 @@ router.put(
 );
 router.post("/users/forgot-password", userController.forgotPassword);
 
-router.post("/report/sampah", reportController.createReport);
-router.post("/report/tpa", reporttpaController.createPelaporan);
+router.post("/report/newsampah", reportController.createReport);
+router.get("/report/sampah", reportController.getAllReports);
+router.put("/report/sampah/:id", reportController.updateReportById);
+router.delete("/report/sampah/:id", reportController.deleteReportById);
+router.patch("/report/sampah/:id/status", reportController.updateReportStatus);
+
+router.get("/report/tpa", reporttpaController.getAllPelaporan);
+router.post("/report/newtpa", reporttpaController.createPelaporan);
+router.put("/report/tpa/:id", reporttpaController.updatePelaporan);
+router.delete("/report/tpa/:id", reporttpaController.deletePelaporan);
+router.patch(
+  "/report/tpa/:id/status",
+  reporttpaController.updateStatusPelaporan
+);
 
 module.exports = router;

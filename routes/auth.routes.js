@@ -13,12 +13,5 @@ module.exports = function (app) {
     controller.signup
   );
 
-  app.post(
-    "/api/auth/validate-unique-email",
-    verifySignUp.checkDuplicateUsernameOrEmail
-  );
-
   app.post("/api/auth/login", controller.signin);
-
-  app.post("/api/auth/logout", controller.signout);
 };

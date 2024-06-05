@@ -54,6 +54,14 @@ module.exports = (sequelize, Sequelize) => {
         type: Sequelize.STRING(225),
         allowNull: true,
       },
+      img_tpa: {
+        type: Sequelize.STRING(225),
+        allowNull: true,
+      },
+      status: {
+        type: Sequelize.STRING(45),
+        allowNull: true,
+      },
       created_at: {
         type: Sequelize.DATE,
         defaultValue: Sequelize.NOW,
