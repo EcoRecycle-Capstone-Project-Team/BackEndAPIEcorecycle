@@ -111,6 +111,17 @@ exports.updatePelaporan = async (req, res) => {
       });
     }
 
+    let img_tpa = pelaporan.img_tpa;
+    if (req.file) {
+      if (img_tpa) {
+        const imgPath = path.join("public", "img", img_tpa);
+        if (fs.existsSync(imgPath)) {
+          fs.unlinkSync(imgPath);
+        }
+      }
+      img_tpa = req.file.filename;
+    }
+
     await pelaporan.update({
       user_id,
       nama_pelapor,
@@ -123,6 +134,7 @@ exports.updatePelaporan = async (req, res) => {
       provinsi,
       latitude,
       longitude,
+      img_tpa,
     });
 
     return res.status(200).json({
