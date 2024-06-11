@@ -4,7 +4,6 @@ const userController = require("../controllers/user.controller");
 const reportController = require("../controllers/laporsampah.controller");
 const reporttpaController = require("../controllers/laporantpa.controller");
 const router = express.Router();
-const upload = require("../config/multer-config");
 
 router.get("/", (req, res) => {
   res.json({
