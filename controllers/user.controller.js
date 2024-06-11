@@ -9,7 +9,13 @@ const multer = require("multer");
 
 exports.getMe = async (req, res) => {
   try {
-    const user = await User.findByPk(req.userId);
+    const user = await User.findByPk(req.userId, {
+      include: {
+        model: db.role,
+        attributes: ["name"],
+        through: { attributes: [] },
+      },
+    });
 
     if (!user) {
       return res.status(404).send({
@@ -18,6 +24,8 @@ exports.getMe = async (req, res) => {
         data: {},
       });
     }
+
+    const userRoles = user.roles.map((role) => role.name);
 
     res.status(200).send({
       status: "success",
@@ -32,6 +40,7 @@ exports.getMe = async (req, res) => {
           tanggal_lahir: user.tanggal_lahir,
           jenis_kelamin: user.jenis_kelamin,
           alamat: user.alamat,
+          roles: userRoles,
         },
       },
     });

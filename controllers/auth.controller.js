@@ -126,7 +126,15 @@ exports.signin = async (req, res) => {
       });
     }
 
-    const user = await User.findOne({ where: { email } });
+    const user = await User.findOne({
+      where: { email },
+      include: {
+        model: db.role,
+        attributes: ["name"],
+        through: { attributes: [] },
+      },
+    });
+
     if (!user) {
       return res.status(404).send({
         status: "fail",
@@ -149,13 +157,10 @@ exports.signin = async (req, res) => {
       allowInsecureKeySizes: true,
     });
 
-    let authorities = [];
-    const roles = await user.getRoles();
-    for (let i = 0; i < roles.length; i++) {
-      authorities.push("ROLE_" + roles[i].name.toUpperCase());
+    let role = null;
+    if (user.roles && user.roles.length > 0) {
+      role = user.roles[0].name;
     }
-
-    req.session.token = token;
 
     return res.status(200).send({
       status: "success",
@@ -163,6 +168,7 @@ exports.signin = async (req, res) => {
       data: {
         user: {
           name: user.username,
+          role: role,
         },
         token: token,
       },
