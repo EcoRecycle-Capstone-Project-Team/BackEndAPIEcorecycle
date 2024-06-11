@@ -103,6 +103,17 @@ exports.updateReportById = async (req, res) => {
       });
     }
 
+    let img_bukti = report.img_bukti;
+    if (req.file) {
+      if (img_bukti) {
+        const imgPath = path.join("public", "img", img_bukti);
+        if (fs.existsSync(imgPath)) {
+          fs.unlinkSync(imgPath);
+        }
+      }
+      img_bukti = req.file.filename;
+    }
+
     await report.update({
       user_id,
       nama_pelapor,
@@ -112,6 +123,7 @@ exports.updateReportById = async (req, res) => {
       kode_pos,
       tgl_lapor,
       deskripsi,
+      img_bukti,
       latitude,
       longitude,
     });
@@ -189,6 +201,49 @@ exports.updateReportStatus = async (req, res) => {
     return res.status(500).json({
       status: "error",
       message: "Unable to update report status",
+      error: error.message,
+    });
+  }
+};
+
+exports.getUserReports = async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const userReports = await Report.findAll({ where: { user_id: userId } });
+    return res.status(200).json({
+      status: "success",
+      message: "User reports retrieved successfully",
+      data: userReports,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: "error",
+      message: "Unable to retrieve user reports",
+      error: error.message,
+    });
+  }
+};
+
+exports.deleteUserReportById = async (req, res) => {
+  const userId = req.body;
+  const { id } = req.params;
+  try {
+    const report = await Report.findOne({ where: { id, user_id: userId } });
+    if (!report) {
+      return res.status(404).json({
+        status: "error",
+        message: "Report not found or does not belong to the user",
+      });
+    }
+    await report.destroy();
+    return res.status(200).json({
+      status: "success",
+      message: "Report deleted successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: "error",
+      message: "Unable to delete user report",
       error: error.message,
     });
   }

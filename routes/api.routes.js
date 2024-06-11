@@ -34,6 +34,9 @@ router.put("/report/sampah/:id", reportController.updateReportById);
 router.delete("/report/sampah/:id", reportController.deleteReportById);
 router.patch("/report/sampah/:id/status", reportController.updateReportStatus);
 
+router.get("/report/sampah/user/:id", reportController.getUserReports);
+router.delete("/report/sampah/user/:id", reportController.deleteUserReportById);
+
 router.get("/report/tpa", reporttpaController.getAllPelaporan);
 router.post("/report/newtpa", reporttpaController.createPelaporan);
 router.put("/report/tpa/:id", reporttpaController.updatePelaporan);
