@@ -230,3 +230,38 @@ exports.updateUserProfile = async (req, res) => {
     }
   });
 };
+
+exports.deleteUserById = async (req, res) => {
+  const userId = req.params.id;
+
+  try {
+    const user = await User.findByPk(userId);
+
+    if (!user) {
+      return res.status(404).json({
+        status: "fail",
+        message: "User not found.",
+      });
+    }
+
+    if (user.profile_photo) {
+      const profilePhotoPath = path.join("public", "img", user.profile_photo);
+      if (fs.existsSync(profilePhotoPath)) {
+        fs.unlinkSync(profilePhotoPath);
+      }
+    }
+
+    await user.destroy();
+
+    res.status(200).json({
+      status: "success",
+      message: "User deleted successfully.",
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: "error",
+      message: "Unable to delete user.",
+      error: error.message,
+    });
+  }
+};

@@ -26,6 +26,7 @@ router.put(
   [authJwt.verifyToken],
   userController.updateUserProfile
 );
+router.delete("/users/:id", authJwt.verifyToken, userController.deleteUserById);
 
 router.post("/report/newsampah", reportController.createReport);
 router.get("/report/sampah", reportController.getAllReports);
