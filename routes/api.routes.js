@@ -4,6 +4,7 @@ const userController = require("../controllers/user.controller");
 const reportController = require("../controllers/laporsampah.controller");
 const reporttpaController = require("../controllers/laporantpa.controller");
 const router = express.Router();
+const upload = require("../config/multer-config");
 
 router.get("/", (req, res) => {
   res.json({
@@ -20,6 +21,11 @@ router.put(
   userController.changePassword
 );
 router.post("/users/forgot-password", userController.forgotPassword);
+router.put(
+  "/users/update-profile/:id",
+  [authJwt.verifyToken],
+  userController.updateUserProfile
+);
 
 router.post("/report/newsampah", reportController.createReport);
 router.get("/report/sampah", reportController.getAllReports);

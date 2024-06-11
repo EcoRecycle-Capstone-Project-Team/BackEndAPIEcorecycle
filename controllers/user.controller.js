@@ -2,6 +2,10 @@ const db = require("../models");
 const User = db.user;
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
+const fs = require("fs");
+const path = require("path");
+const upload = require("../config/multer-config");
+const multer = require("multer");
 
 exports.getMe = async (req, res) => {
   try {
@@ -23,6 +27,11 @@ exports.getMe = async (req, res) => {
           id: user.id,
           name: user.username,
           email: user.email,
+          phone_number: user.phone_number,
+          profile_photo: user.profile_photo,
+          tanggal_lahir: user.tanggal_lahir,
+          jenis_kelamin: user.jenis_kelamin,
+          alamat: user.alamat,
         },
       },
     });
@@ -146,4 +155,78 @@ exports.forgotPassword = async (req, res) => {
       error: error.message,
     });
   }
+};
+
+exports.updateUserProfile = async (req, res) => {
+  upload.single("profile_photo")(req, res, async function (err) {
+    if (err instanceof multer.MulterError) {
+      return res.status(500).json({
+        status: "error",
+        message: "Multer error occurred when uploading.",
+        error: err.message,
+      });
+    } else if (err) {
+      return res.status(500).json({
+        status: "error",
+        message: "An unknown error occurred when uploading.",
+        error: err.message,
+      });
+    }
+
+    const { username, phone_number, tanggal_lahir, jenis_kelamin, alamat } =
+      req.body;
+
+    try {
+      const user = await User.findByPk(req.params.id);
+
+      if (!user) {
+        return res.status(404).json({
+          status: "fail",
+          message: "User not found.",
+        });
+      }
+
+      const profilePhotoPath = path.join("public", "img", user.profile_photo);
+
+      let profile_photo = user.profile_photo;
+      if (req.file) {
+        if (fs.existsSync(profilePhotoPath)) {
+          fs.unlinkSync(profilePhotoPath);
+        }
+        profile_photo = req.file.filename;
+      }
+
+      await user.update({
+        username: username || user.username,
+        phone_number: phone_number || user.phone_number,
+        profile_photo: profile_photo,
+        tanggal_lahir: tanggal_lahir || user.tanggal_lahir,
+        jenis_kelamin: jenis_kelamin || user.jenis_kelamin,
+        alamat: alamat || user.alamat,
+      });
+
+      res.status(200).json({
+        status: "success",
+        message: "Profile updated successfully.",
+        data: {
+          user: {
+            id: user.id,
+            name: user.username,
+            email: user.email,
+            phone_number: user.phone_number,
+            profile_photo: user.profile_photo,
+            tanggal_lahir: user.tanggal_lahir,
+            jenis_kelamin: user.jenis_kelamin,
+            alamat: user.alamat,
+          },
+        },
+      });
+    } catch (error) {
+      res.status(500).json({
+        status: "error",
+        message: "Unable to update profile.",
+        error: error.message,
+      });
+    }
+  });
 };
