@@ -3,6 +3,7 @@ const { authJwt } = require("../middleware");
 const userController = require("../controllers/user.controller");
 const reportController = require("../controllers/laporsampah.controller");
 const reporttpaController = require("../controllers/laporantpa.controller");
+const dashboardController = require("../controllers/dashboard.controller");
 const router = express.Router();
 
 router.get("/", (req, res) => {
@@ -43,6 +44,27 @@ router.delete("/report/tpa/:id", reporttpaController.deletePelaporan);
 router.patch(
   "/report/tpa/:id/status",
   reporttpaController.updateStatusPelaporan
+);
+
+router.get(
+  "/total-reports",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  dashboardController.getTotalReports
+);
+router.get(
+  "/total-completed-reports",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  dashboardController.getTotalCompletedReports
+);
+router.get(
+  "/total-users",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  dashboardController.getTotalUsers
+);
+router.get(
+  "/dashboard-stats",
+  [authJwt.verifyToken, authJwt.isAdmin],
+  dashboardController.getDashboardStats
 );
 
 module.exports = router;
