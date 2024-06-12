@@ -248,3 +248,27 @@ exports.deleteUserReportById = async (req, res) => {
     });
   }
 };
+
+exports.getReportById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const report = await Report.findByPk(id);
+    if (!report) {
+      return res.status(404).json({
+        status: "error",
+        message: "Report not found",
+      });
+    }
+    return res.status(200).json({
+      status: "success",
+      message: "Report retrieved successfully",
+      data: report,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: "error",
+      message: "Unable to retrieve report",
+      error: error.message,
+    });
+  }
+};

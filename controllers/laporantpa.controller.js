@@ -213,3 +213,27 @@ exports.updateStatusPelaporan = async (req, res) => {
     });
   }
 };
+
+exports.getPelaporanById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const pelaporan = await Pelaporan.findByPk(id);
+    if (!pelaporan) {
+      return res.status(404).json({
+        status: "error",
+        message: "Pelaporan not found",
+      });
+    }
+    return res.status(200).json({
+      status: "success",
+      message: "Pelaporan retrieved successfully",
+      data: pelaporan,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: "error",
+      message: "Unable to retrieve pelaporan",
+      error: error.message,
+    });
+  }
+};

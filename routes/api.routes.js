@@ -33,6 +33,11 @@ router.get("/report/sampah", reportController.getAllReports);
 router.put("/report/sampah/:id", reportController.updateReportById);
 router.delete("/report/sampah/:id", reportController.deleteReportById);
 router.patch("/report/sampah/:id/status", reportController.updateReportStatus);
+router.get(
+  "/report/sampah/:id",
+  [authJwt.verifyToken],
+  reportController.getReportById
+);
 
 router.get("/report/sampah/user/:id", reportController.getUserReports);
 router.delete("/report/sampah/user/:id", reportController.deleteUserReportById);
@@ -44,6 +49,11 @@ router.delete("/report/tpa/:id", reporttpaController.deletePelaporan);
 router.patch(
   "/report/tpa/:id/status",
   reporttpaController.updateStatusPelaporan
+);
+router.get(
+  "/report/tpa/:id",
+  [authJwt.verifyToken],
+  reporttpaController.getPelaporanById
 );
 
 router.get(
