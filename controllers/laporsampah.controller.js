@@ -225,10 +225,9 @@ exports.getUserReports = async (req, res) => {
 };
 
 exports.deleteUserReportById = async (req, res) => {
-  const userId = req.body;
   const { id } = req.params;
   try {
-    const report = await Report.findOne({ where: { id, user_id: userId } });
+    const report = await Report.findOne({ where: { id } });
     if (!report) {
       return res.status(404).json({
         status: "error",
