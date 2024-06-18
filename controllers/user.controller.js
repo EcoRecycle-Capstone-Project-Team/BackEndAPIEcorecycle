@@ -53,7 +53,7 @@ exports.getAllUsers = async (req, res) => {
   try {
     const users = await User.findAll({
       attributes: {
-        exclude: ["createdAt", "updatedAt", "password"],
+        exclude: ["updatedAt", "password"],
       },
     });
     res.status(200).json({
