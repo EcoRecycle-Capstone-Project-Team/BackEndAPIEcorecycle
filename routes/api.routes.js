@@ -5,6 +5,8 @@ const reportController = require("../controllers/laporsampah.controller");
 const reporttpaController = require("../controllers/laporantpa.controller");
 const dashboardController = require("../controllers/dashboard.controller");
 const router = express.Router();
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("../swagger.json");
 
 router.get("/", (req, res) => {
   res.json({
@@ -12,6 +14,8 @@ router.get("/", (req, res) => {
     message: "API EcoRecycle 1.0",
   });
 });
+
+router.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 router.get("/users", userController.getAllUsers);
 router.get("/users/me", [authJwt.verifyToken], userController.getMe);

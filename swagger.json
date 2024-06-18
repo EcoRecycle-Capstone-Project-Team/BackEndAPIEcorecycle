@@ -1,0 +1,534 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "EcoRecycle API",
+    "description": "API documentation for EcoRecycle"
+  },
+  "host": "api.ecorecycle.my.id",
+  "basePath": "/",
+  "schemes": ["https"],
+  "paths": {
+    "/": {
+      "get": {
+        "summary": "API Root",
+        "description": "API root endpoint",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "summary": "Get all users",
+        "description": "Retrieve a list of all users",
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/users/me": {
+      "get": {
+        "summary": "Get current user",
+        "description": "Retrieve current authenticated user",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful response"
+          }
+        }
+      }
+    },
+    "/users/change-password": {
+      "put": {
+        "summary": "Change password",
+        "description": "Change password for the current authenticated user",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Password changed successfully"
+          }
+        }
+      }
+    },
+    "/users/forgot-password": {
+      "post": {
+        "summary": "Forgot password",
+        "description": "Request password reset",
+        "responses": {
+          "200": {
+            "description": "Password reset email sent"
+          }
+        }
+      }
+    },
+    "/users/update-profile/{id}": {
+      "put": {
+        "summary": "Update user profile",
+        "description": "Update profile for the user with the given ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Profile updated successfully"
+          }
+        }
+      }
+    },
+    "/users/{id}": {
+      "delete": {
+        "summary": "Delete user",
+        "description": "Delete user with the given ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User deleted successfully"
+          }
+        }
+      }
+    },
+    "/report/newsampah": {
+      "post": {
+        "summary": "Create new report",
+        "description": "Create a new report for sampah",
+        "responses": {
+          "200": {
+            "description": "Report created successfully"
+          }
+        }
+      }
+    },
+    "/report/sampah": {
+      "get": {
+        "summary": "Get all reports",
+        "description": "Retrieve all reports for sampah",
+        "responses": {
+          "200": {
+            "description": "Reports retrieved successfully"
+          }
+        }
+      }
+    },
+    "/report/sampah/{id}": {
+      "put": {
+        "summary": "Update report",
+        "description": "Update report for sampah by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Report updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete report",
+        "description": "Delete report for sampah by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Report deleted successfully"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get report by ID",
+        "description": "Retrieve report for sampah by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Report retrieved successfully"
+          }
+        }
+      }
+    },
+    "/report/sampah/{id}/status": {
+      "patch": {
+        "summary": "Update report status",
+        "description": "Update status of report for sampah by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Report status updated successfully"
+          }
+        }
+      }
+    },
+    "/report/sampah/user/{id}": {
+      "get": {
+        "summary": "Get user reports",
+        "description": "Retrieve reports for a specific user by user ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reports retrieved successfully"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete user reports",
+        "description": "Delete reports for a specific user by user ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Reports deleted successfully"
+          }
+        }
+      }
+    },
+    "/report/tpa": {
+      "get": {
+        "summary": "Get all TPA reports",
+        "description": "Retrieve all TPA reports",
+        "responses": {
+          "200": {
+            "description": "TPA reports retrieved successfully"
+          }
+        }
+      },
+      "post": {
+        "summary": "Create new TPA report",
+        "description": "Create a new report for TPA",
+        "responses": {
+          "200": {
+            "description": "TPA report created successfully"
+          }
+        }
+      }
+    },
+    "/report/tpa/{id}": {
+      "put": {
+        "summary": "Update TPA report",
+        "description": "Update TPA report by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TPA report updated successfully"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete TPA report",
+        "description": "Delete TPA report by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TPA report deleted successfully"
+          }
+        }
+      },
+      "get": {
+        "summary": "Get TPA report by ID",
+        "description": "Retrieve TPA report by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TPA report retrieved successfully"
+          }
+        }
+      }
+    },
+    "/report/tpa/{id}/status": {
+      "patch": {
+        "summary": "Update TPA report status",
+        "description": "Update status of TPA report by ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TPA report status updated successfully"
+          }
+        }
+      }
+    },
+    "/report/tpa/user/{id}": {
+      "get": {
+        "summary": "Get TPA reports for a user",
+        "description": "Retrieve TPA reports for a specific user by user ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TPA reports retrieved successfully"
+          }
+        }
+      },
+      "delete": {
+        "summary": "Delete TPA reports for a user",
+        "description": "Delete TPA reports for a specific user by user ID",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "type": "string"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "TPA reports deleted successfully"
+          }
+        }
+      }
+    },
+    "/total-reports": {
+      "get": {
+        "summary": "Get total reports",
+        "description": "Retrieve total number of reports",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Total reports retrieved successfully"
+          }
+        }
+      }
+    },
+    "/total-completed-reports": {
+      "get": {
+        "summary": "Get total completed reports",
+        "description": "Retrieve total number of completed reports",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Total completed reports retrieved successfully"
+          }
+        }
+      }
+    },
+    "/total-users": {
+      "get": {
+        "summary": "Get total users",
+        "description": "Retrieve total number of users",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Total users retrieved successfully"
+          }
+        }
+      }
+    },
+    "/dashboard-stats": {
+      "get": {
+        "summary": "Get dashboard stats",
+        "description": "Retrieve dashboard statistics",
+        "security": [
+          {
+            "Bearer": []
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Dashboard statistics retrieved successfully"
+          }
+        }
+      }
+    },
+    "/api/auth/register": {
+      "post": {
+        "summary": "Register a new user",
+        "description": "Register a new user with roles",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "email": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                },
+                "roles": {
+                  "type": "array",
+                  "items": {
+                    "type": "string"
+                  }
+                }
+              },
+              "required": ["username", "email", "password"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User registered successfully"
+          }
+        }
+      }
+    },
+    "/api/auth/login": {
+      "post": {
+        "summary": "Login user",
+        "description": "Authenticate user and return token",
+        "parameters": [
+          {
+            "name": "body",
+            "in": "body",
+            "required": true,
+            "schema": {
+              "type": "object",
+              "properties": {
+                "username": {
+                  "type": "string"
+                },
+                "password": {
+                  "type": "string"
+                }
+              },
+              "required": ["username", "password"]
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "User authenticated successfully"
+          }
+        }
+      }
+    }
+  },
+  "securityDefinitions": {
+    "Bearer": {
+      "type": "apiKey",
+      "name": "Authorization",
+      "in": "header"
+    }
+  }
+}
