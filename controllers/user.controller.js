@@ -195,11 +195,14 @@ exports.updateUserProfile = async (req, res) => {
         });
       }
 
-      const profilePhotoPath = path.join("public", "img", user.profile_photo);
+      let profilePhotoPath;
+      if (user.profile_photo) {
+        profilePhotoPath = path.join("public", "img", user.profile_photo);
+      }
 
       let profile_photo = user.profile_photo;
       if (req.file) {
-        if (fs.existsSync(profilePhotoPath)) {
+        if (profilePhotoPath && fs.existsSync(profilePhotoPath)) {
           fs.unlinkSync(profilePhotoPath);
         }
         profile_photo = req.file.filename;

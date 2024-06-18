@@ -237,3 +237,45 @@ exports.getPelaporanById = async (req, res) => {
     });
   }
 };
+
+exports.getPelaporanUser = async (req, res) => {
+  const userId = req.params.id;
+  try {
+    const userReports = await Pelaporan.findAll({ where: { user_id: userId } });
+    return res.status(200).json({
+      status: "success",
+      message: "User pelaporan retrieved successfully",
+      data: userReports,
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: "error",
+      message: "Unable to retrieve user pelaporan",
+      error: error.message,
+    });
+  }
+};
+
+exports.deleteUserPelaporanById = async (req, res) => {
+  const { id } = req.params;
+  try {
+    const report = await Pelaporan.findOne({ where: { id } });
+    if (!report) {
+      return res.status(404).json({
+        status: "error",
+        message: "Pelaporan not found or does not belong to the user",
+      });
+    }
+    await report.destroy();
+    return res.status(200).json({
+      status: "success",
+      message: "Pelaporan deleted successfully",
+    });
+  } catch (error) {
+    return res.status(500).json({
+      status: "error",
+      message: "Unable to delete user pelaporan",
+      error: error.message,
+    });
+  }
+};

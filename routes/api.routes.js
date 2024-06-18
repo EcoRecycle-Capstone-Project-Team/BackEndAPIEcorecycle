@@ -56,6 +56,12 @@ router.get(
   reporttpaController.getPelaporanById
 );
 
+router.get("/report/tpa/user/:id", reporttpaController.getPelaporanUser);
+router.delete(
+  "/report/tpa/user/:id",
+  reporttpaController.deleteUserPelaporanById
+);
+
 router.get(
   "/total-reports",
   [authJwt.verifyToken, authJwt.isAdmin],
